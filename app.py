@@ -152,7 +152,7 @@ def edit(movie_id):
         year = request.form['year']
 
         if not title or not year or len(year) > 4 or len(title) > 60:
-            flash('Invalid input')
+            flash('Invalid input.')
             return redirect(url_for('edit', movie_id=movie_id))
         movie.title = title
         movie.year = year
@@ -183,9 +183,13 @@ def settings():
             return redirect(url_for('settings'))
 
         current_user.name = name
+        # 以下两行等同于上面一行的用法
+        # user = User.query.first()
+        # user.name = name
         db.session.commit()
         flash('Settings updated.')
         return redirect(url_for('index'))
+
     return render_template('settings.html')
 
 
@@ -196,7 +200,7 @@ def login():
         password = request.form['password']
 
         if not username or not password:
-            flash('Invalid input')
+            flash('Invalid input.')
             return redirect(url_for('login'))
 
         user = User.query.first()
